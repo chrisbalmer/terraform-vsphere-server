@@ -56,7 +56,7 @@ data "onepassword_item_login" "vm" {
 
 module "server" {
   count  = var.vm_count
-  source = "github.com/chrisbalmer/terraform-vsphere-vm?ref=v0.5.1"
+  source = "github.com/chrisbalmer/terraform-vsphere-vm?ref=v0.5.2"
 
   vm               = merge({ name = "${var.prefix}${var.name}${count.index + 1}" }, var.vm)
   cluster_settings = var.cluster_settings
