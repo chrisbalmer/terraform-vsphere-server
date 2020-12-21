@@ -58,7 +58,13 @@ module "server" {
   count  = var.vm_count
   source = "github.com/chrisbalmer/terraform-vsphere-vm?ref=v0.5.2"
 
-  vm               = merge({ name = "${var.prefix}${var.name}${count.index + 1}" }, var.vm)
+  vm = merge(
+    {
+      name     = "${var.prefix}${var.name}${count.index + 1}"
+      networks = length(var.networks) > 0 ? var.networks[count.index] : var.vm.networks
+    },
+    var.vm
+  )
   cluster_settings = var.cluster_settings
 
   initial_key = [for field in [for section in data.onepassword_item_login.workstation.section : section if section["name"] == "Public"][0].field : field if field["name"] == "ssh_public_key"][0]["string"]

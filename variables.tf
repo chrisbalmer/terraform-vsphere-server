@@ -12,6 +12,10 @@ variable "prefix" {
   default = "ops"
 }
 
+variable "networks" {
+  default = []
+}
+
 variable "vm" {}
 
 variable "cluster_settings" {
