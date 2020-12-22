@@ -36,7 +36,7 @@ variable "default_vm" {
     gateway         = null
     disks           = []
     datastore       = "vsanDatastore"
-    template        = "centos7-2020-12-21"
+    template        = "centos7-2020-12-22"
 
     customize                            = false
     cloud_init                           = true
