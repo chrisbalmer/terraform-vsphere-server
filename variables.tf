@@ -16,7 +16,43 @@ variable "networks" {
   default = []
 }
 
+variable "ansible_groups" {
+  type = list(
+    object(
+      {
+        name = string
+      }
+    )
+  )
+  default = []
+}
+
 variable "vm" {}
+
+variable "default_vm" {
+  default = {
+    name            = "worker"
+    network_timeout = 5
+    domain          = "ad.balmerfamilyfarm.com"
+    gateway         = null
+    networks        = []
+    disks           = []
+    datastore       = "vsanDatastore"
+    template        = "centos7-2020-12-21"
+
+    customize                            = false
+    cloud_init                           = true
+    cloud_init_custom                    = false
+    cloud_config_template                = "centos-cloud-config.tpl"
+    metadata_template                    = "centos-metadata.tpl"
+    network_config_template              = "centos-network-config.tpl"
+    cloud_config_guestinfo_path          = "cloud-init.config.data"
+    cloud_config_guestinfo_encoding_path = "cloud-init.data.encoding"
+
+    cpus   = 2
+    memory = 4096
+  }
+}
 
 variable "cluster_settings" {
 

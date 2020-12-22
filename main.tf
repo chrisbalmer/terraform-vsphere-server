@@ -1,9 +1,13 @@
+locals {
+  vm = merge(var.default_vm, var.vm)
+}
+
 terraform {
   required_providers {
-    # ansible = {
-    #   source  = "nbering/ansible"
-    #   version = "1.0.4"
-    # }
+    ansible = {
+      source  = "nbering/ansible"
+      version = "1.0.4"
+    }
 
     dns = {
       version = "2.2"
@@ -61,7 +65,7 @@ module "server" {
   vm = merge(
     {
       name     = "${var.prefix}${var.name}${count.index + 1}"
-      networks = length(var.networks) > 0 ? var.networks[count.index] : var.vm.networks
+      networks = length(var.networks) > 0 ? var.networks[count.index] : local.vm.networks
     },
     var.vm
   )
@@ -72,4 +76,12 @@ module "server" {
   cloud_pass  = data.onepassword_item_login.vm.password
 }
 
-
+resource "ansible_host" "vm" {
+  count              = length(var.ansible_groups) > 0 ? var.vm_count : 0
+  inventory_hostname = "${var.prefix}${var.name}${count.index + 1}.${local.vm.domain}"
+  groups             = [for group in var.ansible_groups : group.name]
+  vars = {
+    ansible_user = data.onepassword_item_login.vm.username
+    ansible_host = length(var.networks) > 0 ? split("/", var.networks[count.index][0].ipv4_address)[0] : split("/", local.vm.networks[0].ipv4_address)[0]
+  }
+}
