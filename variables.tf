@@ -27,6 +27,11 @@ variable "ansible_groups" {
   default = []
 }
 
+variable "ansible_host_key_check" {
+  type    = bool
+  default = true
+}
+
 variable "vm" {}
 
 variable "default_vm" {

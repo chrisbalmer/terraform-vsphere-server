@@ -81,7 +81,8 @@ resource "ansible_host" "vm" {
   inventory_hostname = "${var.prefix}${var.name}${count.index + 1}.${local.vm.domain}"
   groups             = [for group in var.ansible_groups : group.name]
   vars = {
-    ansible_user = data.onepassword_item_login.vm.username
-    ansible_host = length(var.networks) > 0 ? split("/", var.networks[count.index][0].ipv4_address)[0] : split("/", local.vm.networks[0].ipv4_address)[0]
+    ansible_user           = data.onepassword_item_login.vm.username
+    ansible_host           = length(var.networks) > 0 ? split("/", var.networks[count.index][0].ipv4_address)[0] : split("/", local.vm.networks[0].ipv4_address)[0]
+    ansible_ssh_extra_args = var.ansible_host_key_check ? null : "-o StrictHostKeyChecking=no"
   }
 }
