@@ -65,6 +65,7 @@ module "server" {
   vm = merge(
     {
       name     = "${var.prefix}${var.name}${count.index + 1}"
+      gateway  = length(var.networks) > 0 ? var.networks[count.index][0].gateway : local.vm.gateway
       networks = length(var.networks) > 0 ? var.networks[count.index] : local.vm.networks
     },
     local.vm

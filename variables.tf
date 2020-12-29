@@ -38,7 +38,6 @@ variable "default_vm" {
   default = {
     network_timeout = 5
     domain          = "ad.balmerfamilyfarm.com"
-    gateway         = null
     disks           = []
     datastore       = "vsanDatastore"
     template        = "centos7-2020-12-22"
