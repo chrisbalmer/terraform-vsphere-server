@@ -40,7 +40,7 @@ variable "default_vm" {
     domain          = "ad.balmerfamilyfarm.com"
     disks           = []
     datastore       = "vsanDatastore"
-    template        = "centos7-2020-12-22"
+    template        = "centos7-2020-12-30"
 
     customize                            = false
     cloud_init                           = true
@@ -95,8 +95,3 @@ variable "vsphere_server" {
   description = "The vCenter server to use"
   default     = "vcenter.balmerfamilyfarm.com"
 }
-
-# variable "ansible_hostkey_checking" {
-#   description = "Whether or not to enable strict host key checking."
-#   default     = "no"
-# }
