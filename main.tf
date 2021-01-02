@@ -80,7 +80,7 @@ module "server" {
 resource "ansible_host" "vm" {
   count              = length(var.ansible_groups) > 0 ? var.vm_count : 0
   inventory_hostname = "${var.prefix}${var.name}${count.index + 1}.${local.vm.domain}"
-  groups             = [for group in var.ansible_groups : group.name]
+  groups             = length(var.ansible_groups) > 1 ? var.ansible_groups[count.index] : var.ansible_groups[0]
   vars = {
     ansible_user           = data.onepassword_item_login.vm.username
     ansible_host           = length(var.networks) > 0 ? split("/", var.networks[count.index][0].ipv4_address)[0] : split("/", local.vm.networks[0].ipv4_address)[0]

@@ -17,13 +17,7 @@ variable "networks" {
 }
 
 variable "ansible_groups" {
-  type = list(
-    object(
-      {
-        name = string
-      }
-    )
-  )
+  type    = list(list(string))
   default = []
 }
 
@@ -40,7 +34,7 @@ variable "default_vm" {
     domain          = "ad.balmerfamilyfarm.com"
     disks           = []
     datastore       = "vsanDatastore"
-    template        = "centos7-2020-12-30"
+    template        = "centos7-2020-12-22"
 
     customize                            = false
     cloud_init                           = true
@@ -53,6 +47,7 @@ variable "default_vm" {
 
     cpus   = 2
     memory = 4096
+
   }
 }
 
