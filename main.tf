@@ -60,7 +60,7 @@ data "onepassword_item_login" "vm" {
 
 module "server" {
   count  = var.vm_count
-  source = "github.com/chrisbalmer/terraform-vsphere-vm?ref=v0.6.0"
+  source = "github.com/chrisbalmer/terraform-vsphere-vm?ref=v0.6.1"
 
   vm = merge(
     {
