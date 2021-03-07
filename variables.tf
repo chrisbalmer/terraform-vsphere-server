@@ -16,6 +16,10 @@ variable "networks" {
   default = []
 }
 
+variable "tags" {
+  default = []
+}
+
 variable "ansible_groups" {
   type    = list(list(string))
   default = []
@@ -77,7 +81,7 @@ variable "op_vcenter_login" {
 
 variable "ssh_keys" {
   description = "SSH keys to add to the node."
-  type = list(string)
+  type        = list(string)
 }
 
 variable "op_vm_login" {

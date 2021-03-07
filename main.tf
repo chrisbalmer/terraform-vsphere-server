@@ -51,21 +51,22 @@ data "onepassword_item_login" "vm" {
 
 module "server" {
   count  = var.vm_count
-  source = "github.com/chrisbalmer/terraform-vsphere-vm?ref=v0.7.0"
+  source = "github.com/chrisbalmer/terraform-vsphere-vm?ref=v0.8.0"
 
   vm = merge(
     {
       name     = "${var.prefix}${var.name}${count.index + 1}"
       gateway  = length(var.networks) > 0 ? var.networks[count.index][0].gateway : local.vm.gateway
       networks = length(var.networks) > 0 ? var.networks[count.index] : local.vm.networks
+      tags     = length(var.tags) > 0 ? var.tags[count.index] : local.vm.tags
     },
     local.vm
   )
   cluster_settings = var.cluster_settings
 
-  ssh_keys = var.ssh_keys
-  cloud_user  = data.onepassword_item_login.vm.username
-  cloud_pass  = data.onepassword_item_login.vm.password
+  ssh_keys   = var.ssh_keys
+  cloud_user = data.onepassword_item_login.vm.username
+  cloud_pass = data.onepassword_item_login.vm.password
 }
 
 resource "ansible_host" "vm" {
