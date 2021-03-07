@@ -75,9 +75,9 @@ variable "op_vcenter_login" {
   default     = "ad.balmerfamilyfarm.com - terraform-vsphere"
 }
 
-variable "op_workstation_login" {
-  description = "Login for the workstation with the SSH key."
-  default     = "ops-workstation-1"
+variable "ssh_keys" {
+  description = "SSH keys to add to the node."
+  type = list(string)
 }
 
 variable "op_vm_login" {

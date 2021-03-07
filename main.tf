@@ -9,10 +9,6 @@ terraform {
       version = "1.0.4"
     }
 
-    dns = {
-      version = "2.2"
-    }
-
     onepassword = {
       source  = "anasinnyk/onepassword"
       version = "1.2.1"
@@ -48,11 +44,6 @@ data "onepassword_item_login" "vcenter" {
   vault = data.onepassword_vault.op_homelab.name
 }
 
-data "onepassword_item_login" "workstation" {
-  name  = var.op_workstation_login
-  vault = data.onepassword_vault.op_homelab.name
-}
-
 data "onepassword_item_login" "vm" {
   name  = var.op_vm_login
   vault = data.onepassword_vault.op_homelab.name
@@ -60,7 +51,7 @@ data "onepassword_item_login" "vm" {
 
 module "server" {
   count  = var.vm_count
-  source = "github.com/chrisbalmer/terraform-vsphere-vm?ref=v0.6.1"
+  source = "github.com/chrisbalmer/terraform-vsphere-vm?ref=v0.7.0"
 
   vm = merge(
     {
@@ -72,7 +63,7 @@ module "server" {
   )
   cluster_settings = var.cluster_settings
 
-  initial_key = [for field in [for section in data.onepassword_item_login.workstation.section : section if section["name"] == "Public"][0].field : field if field["name"] == "ssh_public_key"][0]["string"]
+  ssh_keys = var.ssh_keys
   cloud_user  = data.onepassword_item_login.vm.username
   cloud_pass  = data.onepassword_item_login.vm.password
 }
