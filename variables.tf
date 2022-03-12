@@ -40,14 +40,8 @@ variable "default_vm" {
     datastore       = "vsanDatastore"
     template        = "centos7-2020-12-22"
 
-    customize                            = false
-    cloud_init                           = true
-    cloud_init_custom                    = false
-    cloud_config_template                = "centos-cloud-config.tpl"
+    userdata_template                    = "centos-cloud-config.tpl"
     metadata_template                    = "centos-metadata.tpl"
-    network_config_template              = "centos-network-config.tpl"
-    cloud_config_guestinfo_path          = "cloud-init.config.data"
-    cloud_config_guestinfo_encoding_path = "cloud-init.data.encoding"
 
     cpus   = 2
     memory = 4096

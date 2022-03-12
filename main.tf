@@ -19,7 +19,7 @@ terraform {
     }
 
     vsphere = {
-      version = "1.24.3"
+      version = "2.1.1"
     }
   }
 }
@@ -51,7 +51,7 @@ data "onepassword_item_login" "vm" {
 
 module "server" {
   count  = var.vm_count
-  source = "github.com/chrisbalmer/terraform-vsphere-vm?ref=v0.8.0"
+  source = "github.com/chrisbalmer/terraform-vsphere-vm?ref=v1.0.0"
 
   vm = merge(
     {
